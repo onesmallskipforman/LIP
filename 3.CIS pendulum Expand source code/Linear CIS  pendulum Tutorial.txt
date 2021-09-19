@@ -1,0 +1,7 @@
+Linear CIS pendulum tutorial
+
+Prerequisites: The hardware of The linear CIS pendulum and inverted inverted pendulum  are exactly the same, but, the program is different! Before use, you need to follow the [Instructions for the use of linear inverted pendul]. The last page of this document is the tutorial.Download[Linear CIS  pendulum Source code.hex¡¿ to the controller to use.
+
+How to use: As with the inverted pendulum, you do not need the pendulum to the balance position except when you turn it on. Allow the balance to open when the pendulum naturally hangs down.
+
+About the pendulum: The pendulum of the linear inverted pendulum will remain in a state of static sagging without external force. When subjected to an external force, the state of the pendulum is similar to that of the pendulum. If there is no friction, the pendulum It will continue to oscillate. In many cases, we do not want this kind of continuous oscillation. For example, when the crane is hanging on the animal body, we hope that the object can stop to the designated position too quickly.
