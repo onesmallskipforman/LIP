@@ -27,6 +27,12 @@
 #define GPIO_ODR_REGISTER(x) (*(volatile uint32_t *)(x + 0xC))
 #define GPIO_ODR_PIN(x) (1 << x)
 
+void SystemInit(void) {
+    return;
+}
+void SystemCoreClockUpdate(void) {
+    return;
+}
 int main(void) {
     // Enable port C clock gate.
     RCC_APB2ENR_REGISTER |= RCC_APB2ENR_IOPCEN;
