@@ -19,5 +19,13 @@ application.bin: application.elf
 application.hex: application.elf
 	arm-none-eabi-objcopy -O ihex $^ $@
 
+load: application.hex
+	sudo chown skipper /dev/ttyUSB0
+	STM32_Programmer_CLI -c port=/dev/ttyUSB0 -d $^ -v # --start
+
+run: load
+	sudo chown skipper /dev/ttyUSB0
+	STM32_Programmer_CLI -c port=/dev/ttyUSB0 --start
+
 clean:
 	rm -rf *.o *.elf *.bin *.hex
