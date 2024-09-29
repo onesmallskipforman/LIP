@@ -9,7 +9,9 @@ startup_stm32f103xb.o: startup_stm32f103xb.s
 
 application.elf: main.o syscalls.o link.ld startup_stm32f103xb.o
 	# TODO: see step-4 and step-5
-	arm-none-eabi-gcc -o application.elf -Wl,-TSTM32F103XB_FLASH.ld -nostartfiles -nostdlib main.o syscalls.o startup_stm32f103xb.o -lc -lgcc
+	# arm-none-eabi-gcc main.o syscalls.o startup_stm32f103xb.o -lc -lgcc -o application.elf -Wl,-TSTM32F103XB_FLASH.ld -nostartfiles -nostdlib
+	# arm-none-eabi-gcc main.o -lc -lgcc -o application.elf -Wl,-TSTM32F103XB_FLASH.ld -nostartfiles -nostdlib
+	arm-none-eabi-gcc main.o syscalls.o -lc -lgcc -o application.elf -Wl,-TSTM32F103XB_FLASH.ld -nostartfiles -nostdlib
 	# arm-none-eabi-gcc -o application.elf -Wl,-Tlink.ld -nostartfiles main.o
 
 application.bin: application.elf
