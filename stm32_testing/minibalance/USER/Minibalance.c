@@ -5,8 +5,8 @@ void SystemInit(void) {
   /* extern long _sbss, _ebss, _sdata, _edata, _sidata; */
   /* for (long *dst = &_sbss; dst < &_ebss; dst++) *dst = 0; */
   /* for (long *dst = &_sdata, *src = &_sidata; dst < &_edata;) *dst++ = *src++; */
-    extern int main(void);
-    main();
+    /* extern int main(void); */
+    /* main(); */
     /* for (;;) (void) 0;  // Infinite loop */
     return;
 }

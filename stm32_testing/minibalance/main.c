@@ -66,7 +66,7 @@ void SystemInit(void) {
   /* for (long *dst = &_sbss; dst < &_ebss; dst++) *dst = 0; */
   /* for (long *dst = &_sdata, *src = &_sidata; dst < &_edata;) *dst++ = *src++; */
     /* extern int main(void); */
-    main();
+    /* main(); */
     /* for (;;) (void) 0;  // Infinite loop */
     return;
 }
