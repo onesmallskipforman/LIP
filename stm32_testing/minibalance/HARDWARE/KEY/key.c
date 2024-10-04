@@ -1,5 +1,5 @@
 #include "key.h"
- /**************************************************************************
+/**************************************************************************
 Author£ºMinibalance
 Our aliexpress£ºhttps://minibalance.aliexpress.com
 **************************************************************************/
@@ -8,20 +8,28 @@ Function: initialization of keys
 Entry parameters: None
 Return value: None
 **************************************************************************/
-void KEY_Init(void)
+void keyInit(void)
 {
-	RCC->APB2ENR|=1<<2;    //Enable PORTA clock
-	GPIOA->CRH&=0XFFF00FFF; 
-	GPIOA->CRH|=0X00088000;
-	
-	GPIOA->CRL&=0X0F0FF0FF; 
-	GPIOA->CRL|=0X80800800;
-	
-  GPIOA->ODR|=1<<2; //PA 2 Pull up
-  GPIOA->ODR|=1<<7; //PA 7 Pull up	
-  GPIOA->ODR|=1<<5; //PA5 Pull up
-	GPIOA->ODR|=3<<11; //PA11 12  Pull up	
-} 
+    RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+
+    GPIOA->CRH |= (GPIO_CRH_CNF12_1 | GPIO_CRH_CNF11_1);
+    GPIOA->ODR |= (GPIO_ODR_ODR12   | GPIO_ODR_ODR11  );
+
+    GPIOA->CRL |= (GPIO_CRL_CNF7_1 | GPIO_CRL_CNF5_1 | GPIO_CRL_CNF2_1);
+    GPIOA->ODR |= (GPIO_ODR_ODR7   | GPIO_ODR_ODR5   | GPIO_ODR_ODR2  );
+
+    /* RCC->APB2ENR|=1<<2;    //Enable PORTA clock */
+    /* GPIOA->CRH&=0XFFF00FFF; */
+    /* GPIOA->CRH|=0X00088000; */
+    /**/
+    /* GPIOA->CRL&=0X0F0FF0FF; */
+    /* GPIOA->CRL|=0X80800800; */
+    /**/
+    /* GPIOA->ODR|=1<<2; //PA 2 Pull up */
+    /* GPIOA->ODR|=1<<7; //PA 7 Pull up */
+    /* GPIOA->ODR|=1<<5; //PA5 Pull up */
+    /* GPIOA->ODR|=3<<11; //PA11 12  Pull up */
+}
 /**************************************************************************
 Function: key scan
 Entry parameter: double click wait time.
@@ -29,43 +37,43 @@ Return value: keystroke status 0: no action 1: click 2: double click.
 **************************************************************************/
 uint8_t click_N_Double (uint8_t time)
 {
-		static	uint8_t flag_key,count_key,double_key;	
-		static	uint16_t count_single,Forever_count;
-	  if(KEY2==0)  Forever_count++;   // long mark position is not set at 1.
+        static  uint8_t flag_key,count_key,double_key;
+        static  uint16_t count_single,Forever_count;
+      if(KEY2==0)  Forever_count++;   // long mark position is not set at 1.
      else        Forever_count=0;
-		if(0==KEY2&&0==flag_key)		flag_key=1;	
-	  if(0==count_key)
-		{
-				if(flag_key==1) 
-				{
-					double_key++;
-					count_key=1;	
-				}
-				if(double_key==2) 
-				{
-					double_key=0;
-					count_single=0;
-					return 2;//Double click the execution instruction.
-				}
-		}
-		if(1==KEY2)			flag_key=0,count_key=0;
-		
-		if(1==double_key)
-		{
-			count_single++;
-			if(count_single>time&&Forever_count<time)
-			{
-			double_key=0;
-			count_single=0;	
-			return 1;//Click execute instructions
-			}
-			if(Forever_count>time)
-			{
-			double_key=0;
-			count_single=0;	
-			}
-		}	
-		return 0;
+        if(0==KEY2&&0==flag_key)        flag_key=1;
+      if(0==count_key)
+        {
+                if(flag_key==1)
+                {
+                    double_key++;
+                    count_key=1;
+                }
+                if(double_key==2)
+                {
+                    double_key=0;
+                    count_single=0;
+                    return 2;//Double click the execution instruction.
+                }
+        }
+        if(1==KEY2)         flag_key=0,count_key=0;
+
+        if(1==double_key)
+        {
+            count_single++;
+            if(count_single>time&&Forever_count<time)
+            {
+            double_key=0;
+            count_single=0;
+            return 1;//Click execute instructions
+            }
+            if(Forever_count>time)
+            {
+            double_key=0;
+            count_single=0;
+            }
+        }
+        return 0;
 }
 ///**************************************************************************
 // function: key scan
@@ -74,17 +82,17 @@ uint8_t click_N_Double (uint8_t time)
 //**************************************************************************/
 //u8 click(void)
 //{
-//			static uint8_t flag_key=1;//Press button to loosen the mark.
-//			if(flag_key&&(KEY1==0||KEY2==0||KEY3==0||KEY4==0))
-//			{
-//			flag_key=0;
-//			if(KEY1==0)return 1;
-//			if(KEY2==0)return 2;
-//			if(KEY3==0)return 3;
-//			if(KEY4==0)return 4;				
-//			}
-//			else if(1==KEY1&&1==KEY2&&1==KEY3&&1==KEY4)			flag_key=1;
-//			return 0;// no press button.
+//          static uint8_t flag_key=1;//Press button to loosen the mark.
+//          if(flag_key&&(KEY1==0||KEY2==0||KEY3==0||KEY4==0))
+//          {
+//          flag_key=0;
+//          if(KEY1==0)return 1;
+//          if(KEY2==0)return 2;
+//          if(KEY3==0)return 3;
+//          if(KEY4==0)return 4;
+//          }
+//          else if(1==KEY1&&1==KEY2&&1==KEY3&&1==KEY4)         flag_key=1;
+//          return 0;// no press button.
 //}
 ///**************************************************************************
 // function: long press check
@@ -93,18 +101,18 @@ uint8_t click_N_Double (uint8_t time)
 //**************************************************************************/
 //u8 Long_Press(void)
 //{
-//			static uint16_t Long_Press_count,Long_Press;
-//	    if(Long_Press==0&&KEY==0)  Long_Press_count++;  // long mark position is not set at 1.
-//      else                       Long_Press_count=0; 
-//		  if(Long_Press_count>200)		
-//			{
-//				Long_Press=1;	
-//				Long_Press_count=0;
-//				return 1;
-//			}				
-//			 if(Long_Press==1)     //Long press mark location 1
-//			{
-//				  Long_Press=0;
-//			}
-//			return 0;
+//          static uint16_t Long_Press_count,Long_Press;
+//      if(Long_Press==0&&KEY==0)  Long_Press_count++;  // long mark position is not set at 1.
+//      else                       Long_Press_count=0;
+//        if(Long_Press_count>200)
+//          {
+//              Long_Press=1;
+//              Long_Press_count=0;
+//              return 1;
+//          }
+//           if(Long_Press==1)     //Long press mark location 1
+//          {
+//                Long_Press=0;
+//          }
+//          return 0;
 //}
