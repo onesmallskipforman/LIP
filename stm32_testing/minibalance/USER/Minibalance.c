@@ -2,14 +2,15 @@
 
 
 void SystemInit(void) {
-    // Enable port A clock gate.
-    // TODO: where is IOPGEN in cmsis headers?
-    RCC->APB2ENR |= RCC_APB2ENR_IOPAEN_Msk;
 
-    // Configure GPIO A pin 4 as output.
-    GPIOA->CRL &= ~(GPIO_CRL_MODE4_Msk);
-    GPIOA->CRL |=   GPIO_CRL_MODE4_0;
-    GPIOA->ODR = 1; // TODO: not sure what this line does
+    Stm32_Clock_Init(132);            //=====System clock settings
+    delay_init(72);                 //=====Delay initialization
+    JTAG_Set(JTAG_SWD_DISABLE);     //=====Close the JTAG interface.
+    JTAG_Set(SWD_ENABLE);           //=====The SWD interface can be debugged by using the SWD interface of the motherboard.
+    delay_ms(1000);                 //=====Delay startup, waiting for system stability
+    delay_ms(1000);                 //=====Delay startup, wait for system stability
+    ledInit();                     //=====Initializing the hardware interface with LED connection
+
 
     /* SysTick_Config(RCC_MAX_FREQUENCY/1000000); // Tick every 1 ms */
     return;

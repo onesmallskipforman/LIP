@@ -20,6 +20,9 @@ OBJ/%.o: %.s
 # minibalance_lib: $(OBJS)
 #	arm-none-eabi-ar rcs libminibalance.a $^
 
+compile_commands.json: clean
+	bear -- $(MAKE) $(OBJS)
+
 # -mthumb needed for __libc_init_array
 minibalance.elf: $(OBJS)
 	mkdir -p $(@D)
@@ -40,4 +43,4 @@ run: load
 	STM32_Programmer_CLI -c port=/dev/ttyUSB0 --start
 
 clean:
-	rm -rf OBJ/* *.elf *.bin *.hex
+	rm -rf ./compile_commands.json OBJ/* *.elf *.bin *.hex
