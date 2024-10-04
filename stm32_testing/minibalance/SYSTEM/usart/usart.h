@@ -6,8 +6,8 @@ Our aliexpress£ºhttps://minibalance.aliexpress.com
 **************************************************************************/
 #include "sys.h"
 #include "stdio.h"	 
-void usart1_send(u8 data);
-void uart_init(u32 pclk2,u32 bound);
+void usart1_send(uint8_t data);
+void uart_init(uint32_t pclk2,uint32_t bound);
 #endif	   
 
 

@@ -27,10 +27,10 @@ Function: key scan
 Entry parameter: double click wait time.
 Return value: keystroke status 0: no action 1: click 2: double click.
 **************************************************************************/
-u8 click_N_Double (u8 time)
+uint8_t click_N_Double (uint8_t time)
 {
-		static	u8 flag_key,count_key,double_key;	
-		static	u16 count_single,Forever_count;
+		static	uint8_t flag_key,count_key,double_key;	
+		static	uint16_t count_single,Forever_count;
 	  if(KEY2==0)  Forever_count++;   // long mark position is not set at 1.
      else        Forever_count=0;
 		if(0==KEY2&&0==flag_key)		flag_key=1;	
@@ -74,7 +74,7 @@ u8 click_N_Double (u8 time)
 //**************************************************************************/
 //u8 click(void)
 //{
-//			static u8 flag_key=1;//Press button to loosen the mark.
+//			static uint8_t flag_key=1;//Press button to loosen the mark.
 //			if(flag_key&&(KEY1==0||KEY2==0||KEY3==0||KEY4==0))
 //			{
 //			flag_key=0;
@@ -93,7 +93,7 @@ u8 click_N_Double (u8 time)
 //**************************************************************************/
 //u8 Long_Press(void)
 //{
-//			static u16 Long_Press_count,Long_Press;
+//			static uint16_t Long_Press_count,Long_Press;
 //	    if(Long_Press==0&&KEY==0)  Long_Press_count++;  // long mark position is not set at 1.
 //      else                       Long_Press_count=0; 
 //		  if(Long_Press_count>200)		

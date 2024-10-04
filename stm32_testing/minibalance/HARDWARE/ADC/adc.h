@@ -6,11 +6,11 @@ Author£ºMinibalance
 Our aliexpress£ºhttps://minibalance.aliexpress.com
 **************************************************************************/
 #define Battery_Ch 6
-u16 Get_Adc(u8 ch);
+uint16_t Get_Adc(uint8_t ch);
 int Get_battery_volt(void);   
 void Angle_Adc_Init(void);   
 void  Baterry_Adc_Init(void);
-u16 Get_Adc_Average(u8 ch,u8 times);
+uint16_t Get_Adc_Average(uint8_t ch,uint8_t times);
 #endif 
 
 

@@ -33,7 +33,7 @@ void SPIx_Init(void)
 //SPI_SPEED_8   8分频   (SPI 9M@sys 72M)
 //SPI_SPEED_16  16分频  (SPI 4.5M@sys 72M)
 //SPI_SPEED_256 256分频 (SPI 281.25K@sys 72M)
-void SPIx_SetSpeed(u8 SpeedSet)
+void SPIx_SetSpeed(uint8_t SpeedSet)
 {
 	SPI1->CR1&=0XFFC7;//Fsck=Fcpu/256
 	if(SpeedSet==SPI_SPEED_2)//二分频
@@ -54,9 +54,9 @@ void SPIx_SetSpeed(u8 SpeedSet)
 //SPIx 读写一个字节
 //TxData:要写入的字节
 //返回值:读取到的字节
-u8 SPIx_ReadWriteByte(u8 TxData)
+uint8_t SPIx_ReadWriteByte(uint8_t TxData)
 {		
-	u8 retry=0;				 
+	uint8_t retry=0;				 
 	while((SPI1->SR&1<<1)==0)//等待发送区空	
 	{
 		retry++;

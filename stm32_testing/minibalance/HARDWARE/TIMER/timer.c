@@ -9,7 +9,7 @@ Function function: timing interrupt initialization
 Entry parameters: arr: automatic reload value PSC: clock preset frequency
 Return value: None
 **************************************************************************/
-void Timer1_Init(u16 arr,u16 psc)  
+void Timer1_Init(uint16_t arr,uint16_t psc)  
 {  
 	RCC->APB2ENR|=1<<11;//TIM1 clock enable    
  	TIM1->ARR=arr;      //Setting counter automatic reload value  

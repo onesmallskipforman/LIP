@@ -26,7 +26,7 @@ int fputc(int ch, FILE *f)
 {      
 	
 	while((USART1->SR&0X40)==0);//Flag_Show!=0  Use serial port 1   
-	USART1->DR = (u8) ch;      
+	USART1->DR = (uint8_t) ch;      
 
 	return ch;
 }
@@ -36,16 +36,16 @@ int fputc(int ch, FILE *f)
 /**************************Implementation function*************************************
 *Function: usart1 sends a byte
 *********************************************************************************/
-void usart1_send(u8 data)
+void usart1_send(uint8_t data)
 {
 	USART1->DR = data;
 	while((USART1->SR&0x40)==0);	
 }
-void uart_init(u32 pclk2,u32 bound)
+void uart_init(uint32_t pclk2,uint32_t bound)
 {  	 
 	float temp;
-	u16 mantissa;
-	u16 fraction;	   
+	uint16_t mantissa;
+	uint16_t fraction;	   
 	temp=(float)(pclk2*1000000)/(bound*16);//get USARTDIV
 	mantissa=temp;				 //Get the integer part
 	fraction=(temp-mantissa)*16; //Get the fractional part

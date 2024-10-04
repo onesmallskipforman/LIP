@@ -21,7 +21,7 @@ Function: LED flicker
 Entry parameter: Scintillation frequency
 Return value: None
 **************************************************************************/
-void Led_Flash(u16 time)
+void Led_Flash(uint16_t time)
 {
 	  static int temp;
 	  if(0==time) LED=0;

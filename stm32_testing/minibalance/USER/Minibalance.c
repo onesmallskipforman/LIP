@@ -19,7 +19,7 @@ void SystemCoreClockUpdate(void) {
 Author£ºMinibalance
 Our aliexpress£ºhttps://minibalance.aliexpress.com
 **************************************************************************/
-u8 Flag_Stop=1,delay_50,delay_flag;         //Stop sign bit 50ms precise demo sign.
+uint8_t Flag_Stop=1,delay_50,delay_flag;         //Stop sign bit 50ms precise demo sign.
 int Encoder,Position_Zero=10000;            //Pulse count of encoder
 int Moto;                                   //The motor PWM variable should be Motor, paying tribute to Moto company
 int Voltage;                                //Battery voltage sampling related variables

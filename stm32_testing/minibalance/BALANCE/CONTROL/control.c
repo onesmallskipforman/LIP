@@ -4,7 +4,7 @@ Author£ºMinibalance
 Our aliexpress£ºhttps://minibalance.aliexpress.com
 **************************************************************************/
 int Balance_Pwm,Position_Pwm;
-u8 Flag_Target,Position_Target;
+uint8_t Flag_Target,Position_Target;
 /**************************************************************************
 Function: all the control codes are in it.
 5ms timing interrupt controlled by TIM1
@@ -124,10 +124,10 @@ Function of function: abnormal closing motor
 Inlet parameters: voltage
 Return value: 1: abnormal 0: normal
 **************************************************************************/
-u8 Turn_Off(int voltage)
+uint8_t Turn_Off(int voltage)
 {
-	    u8 temp; 
-	    static u8 count;
+	    uint8_t temp; 
+	    static uint8_t count;
 			if(1==Flag_Stop) //The battery voltage is too low, turn off the motor.
 			{	      
       Flag_Stop=1;				

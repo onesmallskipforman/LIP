@@ -11,6 +11,6 @@ Our aliexpress：https://minibalance.aliexpress.com
 #define BIN1   PBout(14)     //预留 备用
 #define BIN2   PBout(15)     //预留 备用
 #define PWMB   TIM3->CCR3    //预留 备用
-void MiniBalance_PWM_Init(u16 arr,u16 psc);
+void MiniBalance_PWM_Init(uint16_t arr,uint16_t psc);
 void MiniBalance_Motor_Init(void);
 #endif

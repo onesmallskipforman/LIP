@@ -6,16 +6,16 @@ Our aliexpress：https://minibalance.aliexpress.com
 //Set vector table offset address
 //NVIC_VectTab:Base site
 //Offset:Offset
-void MY_NVIC_SetVectorTable(u32 NVIC_VectTab, u32 Offset)
+void MY_NVIC_SetVectorTable(uint32_t NVIC_VectTab, uint32_t Offset)
 {
-    SCB->VTOR = NVIC_VectTab|(Offset & (u32)0x1FFFFF80);//Set the vector table offset register of NVIC.
+    SCB->VTOR = NVIC_VectTab|(Offset & (uint32_t)0x1FFFFF80);//Set the vector table offset register of NVIC.
     //Is the vector table used in the CODE area or in the RAM area?
 }
 //Set up NVIC packet
 //NVIC_Group:NVIC group 0~4 total 5 groups
-void MY_NVIC_PriorityGroupConfig(u8 NVIC_Group)
+void MY_NVIC_PriorityGroupConfig(uint8_t NVIC_Group)
 {
-    u32 temp,temp1;
+    uint32_t temp,temp1;
     temp1=(~NVIC_Group)&0x07;//Three position after taking
     temp1<<=8;
     temp=SCB->AIRCR;  //Read previous settings
@@ -37,9 +37,9 @@ void MY_NVIC_PriorityGroupConfig(u8 NVIC_Group)
 // group 3:3 preemptive priority, 1 bit response priority.
 // group 4:4 preemptive priority, 0 bit response priority.
 // The principle of NVIC_SubPriority and NVIC_PreemptionPriority is that the smaller the value, the more priority.
-void MY_NVIC_Init(u8 NVIC_PreemptionPriority,u8 NVIC_SubPriority,u8 NVIC_Channel,u8 NVIC_Group)
+void MY_NVIC_Init(uint8_t NVIC_PreemptionPriority,uint8_t NVIC_SubPriority,uint8_t NVIC_Channel,uint8_t NVIC_Group)
 {
-    u32 temp;
+    uint32_t temp;
     MY_NVIC_PriorityGroupConfig(NVIC_Group);//Set groupings
     temp=NVIC_PreemptionPriority<<(4-NVIC_Group);
     temp|=NVIC_SubPriority&(0x0f>>NVIC_Group);
@@ -55,10 +55,10 @@ void MY_NVIC_Init(u8 NVIC_PreemptionPriority,u8 NVIC_SubPriority,u8 NVIC_Channel
 //TRIM: trigger mode, 1, down rising edge; 2, up and down edge; 3, any level trigger.
 // this function can only configure 1 IO ports and multiple IO ports at a time, requiring multiple calls.
 // this function automatically opens corresponding interrupts and shielded lines.
-void Ex_NVIC_Config(u8 GPIOx,u8 BITx,u8 TRIM)
+void Ex_NVIC_Config(uint8_t GPIOx,uint8_t BITx,uint8_t TRIM)
 {
-    u8 EXTADDR;
-    u8 EXTOFFSET;
+    uint8_t EXTADDR;
+    uint8_t EXTOFFSET;
     EXTADDR=BITx/4;//get the number of interrupt register group.
     EXTOFFSET=(BITx%4)*4;
     RCC->APB2ENR|=0x01;//Enable IO to reuse clock
@@ -111,7 +111,7 @@ __attribute__((naked, noreturn)) void INTX_ENABLE(void)
 }
 // Set the top address of the stack
 //addr: the top address of the stack
-__attribute__((naked, noreturn)) void MSR_MSP(u32 addr)
+__attribute__((naked, noreturn)) void MSR_MSP(uint32_t addr)
 {
     __asm("MSR MSP, r0"); //set Main Stack value
     __asm("BX r14");
@@ -130,16 +130,16 @@ void Sys_Standby(void)
 //系统软复位
 void Sys_Soft_Reset(void)
 {
-    SCB->AIRCR =0X05FA0000|(u32)0x04;
+    SCB->AIRCR =0X05FA0000|(uint32_t)0x04;
 }
 //JTAG模式设置,用于设置JTAG的模式
 //mode:jtag,swd模式设置;00,全使能;01,使能SWD;10,全关闭;
 //#define JTAG_SWD_DISABLE   0X02
 //#define SWD_ENABLE         0X01
 //#define JTAG_SWD_ENABLE    0X00
-void JTAG_Set(u8 mode)
+void JTAG_Set(uint8_t mode)
 {
-    u32 temp;
+    uint32_t temp;
     temp=mode;
     temp<<=25;
     RCC->APB2ENR|=1<<0;     //开启辅助时钟
@@ -148,7 +148,7 @@ void JTAG_Set(u8 mode)
 }
 //系统时钟初始化函数
 //pll:选择的倍频数，从2开始，最大值为16
-void Stm32_Clock_Init(u8 PLL)
+void Stm32_Clock_Init(uint8_t PLL)
 {
     unsigned char temp=0;
     MYRCC_DeInit();       //复位并配置向量表

@@ -14,6 +14,6 @@ int Position(int Encoder);
 void Set_Pwm(int moto);
 void Key(void);
 void Xianfu_Pwm(void);
-u8 Turn_Off(int voltage);
+uint8_t Turn_Off(int voltage);
 int myabs(int a);
 #endif

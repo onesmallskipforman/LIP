@@ -47,7 +47,7 @@ Function: AD sampling
 Entry parameters: ADC1 channel
 Return value: AD conversion result
 **************************************************************************/
-u16 Get_Adc(u8 ch)   
+uint16_t Get_Adc(uint8_t ch)   
 {
 	// set conversion sequence		 
 	ADC1->SQR3&=0XFFFFFFE0;//Regular sequence 1 channel Ch
@@ -114,10 +114,10 @@ void  Angle_Adc_Init(void)
 //ch: channel number
 //times: acquisition times
 // return value: average value of times conversion result of channel ch.
-u16 Get_Adc_Average(u8 ch,u8 times)
+uint16_t Get_Adc_Average(uint8_t ch,uint8_t times)
 {
-	u32 temp_val=0;
-	u8 t;
+	uint32_t temp_val=0;
+	uint8_t t;
 	for(t=0;t<times;t++)
 	{
 		temp_val+=Get_Adc(ch);

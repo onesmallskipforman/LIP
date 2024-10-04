@@ -8,12 +8,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 OBJ/%.o: %.c
 	mkdir -p $(@D)
-	arm-none-eabi-gcc -o $@ -c $(INC_FLAGS) -DSTM32F103xB \
-	-Du8=uint8_t \
-	-Du16=uint16_t \
-	-Du32=uint8_t \
-	-Du64=uint8_t \
-	-g -nostdlib -mcpu=cortex-m3 -mthumb $<
+	arm-none-eabi-gcc -o $@ -c $(INC_FLAGS) -DSTM32F103xB -g -nostdlib -mcpu=cortex-m3 -mthumb $<
 
 # -x assembler-with-cpp
 OBJ/%.o: %.s

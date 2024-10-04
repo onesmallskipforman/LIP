@@ -1,20 +1,20 @@
 
 #include "usart3.h"
-u8 Usart3_Receive;
- u8 mode_data[8];
- u8 six_data_stop[3]={0X59,0X59,0X59};  //停止数据样本
- u8 six_data_start[3]={0X58,0X58,0X58};  //启动数据样本
+uint8_t Usart3_Receive;
+ uint8_t mode_data[8];
+ uint8_t six_data_stop[3]={0X59,0X59,0X59};  //停止数据样本
+ uint8_t six_data_start[3]={0X58,0X58,0X58};  //启动数据样本
 
 /**************************************************************************
 函数功能：串口3初始化
 入口参数：pclk2:PCLK2 时钟频率(Mhz)    bound:波特率
 返回  值：无
 **************************************************************************/
-void uart3_init(u32 pclk2,u32 bound)
+void uart3_init(uint32_t pclk2,uint32_t bound)
 {  	 
 	float temp;
-	u16 mantissa;
-	u16 fraction;	   
+	uint16_t mantissa;
+	uint16_t fraction;	   
 	temp=(float)(pclk2*1000000)/(bound*16);//得到USARTDIV
 	mantissa=temp;				 //得到整数部分
 	fraction=(temp-mantissa)*16; //得到小数部分	 

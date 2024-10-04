@@ -82,7 +82,7 @@ Function: unit time read encoder count
 Entry parameters: timer
 Return value: speed value
 **************************************************************************/
-int Read_Encoder(u8 TIMX)
+int Read_Encoder(uint8_t TIMX)
 {
     int Encoder_TIM;    
    switch(TIMX)

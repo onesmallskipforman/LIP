@@ -7,8 +7,8 @@ Our aliexpress£ºhttps://minibalance.aliexpress.com
 #include "includes.h"	//for ucos  	  
 #endif
 ////////////////////////////////////////////////////////////////////////////////// 	 
-static u8  fac_us=0;//Us delay multiplier			   
-static u16 fac_ms=0;//MS delay multiplier, under UCOS, represents the MS number of each beat.
+static uint8_t  fac_us=0;//Us delay multiplier			   
+static uint16_t fac_ms=0;//MS delay multiplier, under UCOS, represents the MS number of each beat.
 
 #ifdef OS_CRITICAL_METHOD 	//If OS_CRITICAL_METHOD is defined, it means ucosII is used.
 //Systick interrupt service function, used when using UCOS
@@ -24,10 +24,10 @@ void SysTick_Handler(void)
 //When using UCOS, this function initializes the clock beat of UCOS.
 //The SYSTICK clock is fixed to the 1/8 of the HCLK clock.
 //SYSCLK: system clock
-void delay_init(u8 SYSCLK)
+void delay_init(uint8_t SYSCLK)
 {
 #ifdef OS_CRITICAL_METHOD 	//If OS_CRITICAL_METHOD is defined, it means using ucosII..
-	u32 reload;
+	uint32_t reload;
 #endif
  	SysTick->CTRL&=~(1<<2);	//SYSTICK uses external clock source.
 	fac_us=SYSCLK/8;		//Whether or not UCOS is used, fac_us needs to be used.
@@ -41,18 +41,18 @@ void delay_init(u8 SYSCLK)
 	SysTick->LOAD=reload; 	//Interrupts every 1/OS_TICKS_PER_SEC seconds.
 	SysTick->CTRL|=1<<0;   	//Open SYSTICK  
 #else
-	fac_ms=(u16)fac_us*1000;//The number of systick clocks required for each MS is not UCOS.
+	fac_ms=(uint16_t)fac_us*1000;//The number of systick clocks required for each MS is not UCOS.
 #endif
 }								    
 
 #ifdef OS_CRITICAL_METHOD 	//If OS_CRITICAL_METHOD is defined, it means using ucosII..
 //Delay NUS
 //NUS is the US number to be delayed..		    								   
-void delay_us(u32 nus)
+void delay_us(uint32_t nus)
 {		
-	u32 ticks;
-	u32 told,tnow,tcnt=0;
-	u32 reload=SysTick->LOAD;	//The value of LOAD	    	 
+	uint32_t ticks;
+	uint32_t told,tnow,tcnt=0;
+	uint32_t reload=SysTick->LOAD;	//The value of LOAD	    	 
 	ticks=nus*fac_us; 			//Required beat count	  		 
 	tcnt=0;
 	OSSchedLock();				//Prevent UCOS scheduling and prevent interruption of us delay
@@ -72,7 +72,7 @@ void delay_us(u32 nus)
 }
 //Delay NMS
 //nms:MS number to be delayed
-void delay_ms(u16 nms)
+void delay_ms(uint16_t nms)
 {	
 	if(OSRunning==OS_TRUE)//If OS is running away   
 	{		  
@@ -82,13 +82,13 @@ void delay_ms(u16 nms)
 		}
 		nms%=fac_ms;			//UCOS has been unable to provide such a small delay, using a common mode delay.    
 	}
-	delay_us((u32)(nms*1000));	//Common mode delay 
+	delay_us((uint32_t)(nms*1000));	//Common mode delay 
 }
 #else//   no UCOS
 //delay nus		    								   
-void delay_us(u32 nus)
+void delay_us(uint32_t nus)
 {		
-	u32 temp;	    	 
+	uint32_t temp;	    	 
 	SysTick->LOAD=nus*fac_us; //Time loading	  		 
 	SysTick->VAL=0x00;        //Empty counter
 	SysTick->CTRL=0x01 ;      //Start the countdown 	 
@@ -105,10 +105,10 @@ void delay_us(u32 nus)
 //SysTick->LOAD is a 24 bit register, so the maximum delay is:nms<=0xffffff*8*1000/SYSCLK
 //The SYSCLK unit is Hz, and the NMS unit is Ms.
 // for 72M, nms<=1864
-void delay_ms(u16 nms)
+void delay_ms(uint16_t nms)
 {	 		  	  
-	u32 temp;		   
-	SysTick->LOAD=(u32)nms*fac_ms;//Time loading(SysTick->LOADÎª24bit)
+	uint32_t temp;		   
+	SysTick->LOAD=(uint32_t)nms*fac_ms;//Time loading(SysTick->LOADÎª24bit)
 	SysTick->VAL =0x00;           //Empty counter
 	SysTick->CTRL=0x01 ;          //Start the countdown  
 	do
