@@ -2,16 +2,25 @@
 
 
 void SystemInit(void) {
-  /* extern long _sbss, _ebss, _sdata, _edata, _sidata; */
-  /* for (long *dst = &_sbss; dst < &_ebss; dst++) *dst = 0; */
-  /* for (long *dst = &_sdata, *src = &_sidata; dst < &_edata;) *dst++ = *src++; */
-    /* extern int main(void); */
-    /* main(); */
-    /* for (;;) (void) 0;  // Infinite loop */
+    // Enable port A clock gate.
+    // TODO: where is IOPGEN in cmsis headers?
+    RCC->APB2ENR |= RCC_APB2ENR_IOPAEN_Msk;
+
+    // Configure GPIO A pin 4 as output.
+    GPIOA->CRL &= ~(GPIO_CRL_MODE4_Msk);
+    GPIOA->CRL |=   GPIO_CRL_MODE4_0;
+    GPIOA->ODR = 1; // TODO: not sure what this line does
+
+    /* SysTick_Config(RCC_MAX_FREQUENCY/1000000); // Tick every 1 ms */
     return;
 }
 void SystemCoreClockUpdate(void) {
     return;
+}
+
+static volatile uint32_t s_ticks;
+void SysTick_Handler(void) {
+  s_ticks++;
 }
 
 
@@ -26,28 +35,43 @@ int Voltage;                                //Battery voltage sampling related v
 float Angle_Balance;                        //Angular displacement sensor data
 float Balance_KP=400,Balance_KD=400,Position_KP=20,Position_KD=300;  //PID coefficient
 float Menu=1,Amplitude1=5,Amplitude2=20,Amplitude3=1,Amplitude4=10; //PID debug related parameters
-int main(void)
-{
-    Stm32_Clock_Init(9);            //=====System clock settings
-    delay_init(72);                 //=====Delay initialization
-    JTAG_Set(JTAG_SWD_DISABLE);     //=====Close the JTAG interface.
-    JTAG_Set(SWD_ENABLE);           //=====The SWD interface can be debugged by using the SWD interface of the motherboard.
-    delay_ms(1000);                 //=====Delay startup, waiting for system stability
-    delay_ms(1000);                 //=====Delay startup, wait for system stability
-    LED_Init();                     //=====Initializing the hardware interface with LED connection
-    EXTI_Init();                    //=====Initialization of keys (form of external interruption)
-    OLED_Init();                    //=====OLED initialization
-    uart_init(72,128000);           //=====Initializing serial port 1
-  MiniBalance_PWM_Init(7199,0);   //=====Initialize PWM 10KHZ for driving motor
-    Encoder_Init_TIM4();            //=====Initialization encoder
-    Angle_Adc_Init();               //=====Angular displacement sensor analog data acquisition initialization
-    Baterry_Adc_Init();             //=====Battery voltage analog acquisition initialization
-    Timer1_Init(49,7199);           //=====Timing interrupt initialization
-    while(1)
-        {
-                DataScope();                //===Upper computer
-                delay_flag=1;               //===50ms interrupt precise delay flag
-                oled_show();              //===Display screen open
-                while(delay_flag);        //===50ms interrupt precision delay is mainly waveform display, upper computer needs strict 50ms transmission cycle.
-        }
+/* int main(void) */
+/* { */
+/*     Stm32_Clock_Init(9);            //=====System clock settings */
+/*     delay_init(72);                 //=====Delay initialization */
+/*     JTAG_Set(JTAG_SWD_DISABLE);     //=====Close the JTAG interface. */
+/*     JTAG_Set(SWD_ENABLE);           //=====The SWD interface can be debugged by using the SWD interface of the motherboard. */
+/*     delay_ms(1000);                 //=====Delay startup, waiting for system stability */
+/*     delay_ms(1000);                 //=====Delay startup, wait for system stability */
+/*     LED_Init();                     //=====Initializing the hardware interface with LED connection */
+/*     EXTI_Init();                    //=====Initialization of keys (form of external interruption) */
+/*     OLED_Init();                    //=====OLED initialization */
+/*     uart_init(72,128000);           //=====Initializing serial port 1 */
+/*   MiniBalance_PWM_Init(7199,0);   //=====Initialize PWM 10KHZ for driving motor */
+/*     Encoder_Init_TIM4();            //=====Initialization encoder */
+/*     Angle_Adc_Init();               //=====Angular displacement sensor analog data acquisition initialization */
+/*     Baterry_Adc_Init();             //=====Battery voltage analog acquisition initialization */
+/*     Timer1_Init(49,7199);           //=====Timing interrupt initialization */
+/*     while(1) */
+/*         { */
+/*                 DataScope();                //===Upper computer */
+/*                 delay_flag=1;               //===50ms interrupt precise delay flag */
+/*                 oled_show();              //===Display screen open */
+/*                 while(delay_flag);        //===50ms interrupt precision delay is mainly waveform display, upper computer needs strict 50ms transmission cycle. */
+/*         } */
+/* } */
+
+
+int main(void) {
+    for (;;) {
+        for (uint32_t i = 0; i < 820000; ++i) __asm__ volatile("nop");
+        // Set the output bit.
+        GPIOA->ODR |= GPIO_ODR_ODR4_Msk;
+        for (uint32_t i = 0; i < 400000; ++i) __asm__ volatile("nop");
+        // Reset it again.
+        GPIOA->ODR &= ~GPIO_ODR_ODR4_Msk;
+        for (uint32_t i = 0; i < 10000; ++i) __asm__ volatile("nop");
+    }
+
+    return 0;
 }
