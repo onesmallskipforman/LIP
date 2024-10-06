@@ -19,7 +19,7 @@ int TIM1_UP_IRQHandler(void)
             if(++delay_50==10)  delay_50=0,delay_flag=0;          //===Provide 50ms precise delay for main function.
         }
         Encoder=Read_Encoder(4);                                   //===Update encoder location information
-        Angle_Balance=Get_Adc_Average(3,15);                     //===Postures
+        /* Angle_Balance=Get_Adc_Average(3,15);                     //===Postures */
         Balance_Pwm =balance(Angle_Balance);                                          //===Angle PD control
         if(++Position_Target>4) Position_Pwm=Position(Encoder),Position_Target=0;     //===Position PD control 25ms for one position control
         Moto=Balance_Pwm-Position_Pwm;        //===Calculate final motor PWM
