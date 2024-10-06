@@ -9,6 +9,10 @@ float Balance_KP=400,Balance_KD=400,Position_KP=20,Position_KD=300;  //PID coeff
 float Menu=1,Amplitude1=5,Amplitude2=20,Amplitude3=1,Amplitude4=10; //PID debug related parameters
 
 void SystemInit(void) {
+    return;
+}
+
+int main(void) {
     Stm32_Clock_Init(132);        // System clock settings
     delay_init(72);               // Delay initialization
     JTAG_Set(JTAG_SWD_DISABLE);   // Close the JTAG interface.
@@ -24,15 +28,24 @@ void SystemInit(void) {
     Angle_Adc_Init();             // Angular displacement sensor analog data acquisition initialization
     Baterry_Adc_Init();           // Battery voltage analog acquisition initialization
     Timer1_Init(49,7199);         // Timing interrupt initialization
-    return;
-}
-
-int main(void) {
+    /* while(1) { */
+        /* DataScope();       // Upper computer */
+    /*     delay_flag=1;      // 50ms interrupt precise delay flag */
+    /*     oled_show();       // Display screen open */
+        /* while(delay_flag); // 50ms interrupt precision delay is mainly waveform display, upper computer needs strict 50ms transmission cycle. */
+        /* Led_Flash(100); */
+        /* LED=~LED; */
+        /* delay_ms(50); */
+        /* LED=~LED; */
+    /* } */
     while(1) {
         /* DataScope();       // Upper computer */
         delay_flag=1;      // 50ms interrupt precise delay flag
         oled_show();       // Display screen open
         while(delay_flag); // 50ms interrupt precision delay is mainly waveform display, upper computer needs strict 50ms transmission cycle.
+        /* delay_ms(100); */
+        /* LED=~LED; */
+        /* Key();                                //===Scan button changes */
     }
     return 0;
 }
