@@ -11,8 +11,8 @@
 #define KEY11 PAin(11)
 #define KEY12 PAin(12)
 void KEY_Init(void);          //°´¼ü³õÊ¼»¯
-u8 click_N_Double (u8 time);  //µ¥»÷°´¼üÉ¨ÃèºÍË«»÷°´¼üÉ¨Ãè
-u8 click(void);               //µ¥»÷°´¼üÉ¨Ãè
-u8 Long_Press(void);
-u8 Long_Press_KEY2(void);
+uint8_t click_N_Double (uint8_t time);  //µ¥»÷°´¼üÉ¨ÃèºÍË«»÷°´¼üÉ¨Ãè
+uint8_t click(void);               //µ¥»÷°´¼üÉ¨Ãè
+uint8_t Long_Press(void);
+uint8_t Long_Press_KEY2(void);
 #endif 

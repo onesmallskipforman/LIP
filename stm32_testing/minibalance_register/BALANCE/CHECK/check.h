@@ -3,6 +3,6 @@
 #include "sys.h"
 
 void Tips(void);
-extern u8 tips_flag;
+extern uint8_t tips_flag;
 
 #endif

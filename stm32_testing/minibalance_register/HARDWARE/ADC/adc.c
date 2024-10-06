@@ -60,7 +60,7 @@ void Adc_Init(void)
 返回  值：AD转换结果
 作    者：平衡小车之家
 **************************************************************************/
-u16 Get_Adc(u8 ch)   
+uint16_t Get_Adc(uint8_t ch)   
 {
 	//设置转换序列	  		 
 	ADC1->SQR3&=0XFFFFFFE0;//规则序列1 通道ch
@@ -88,10 +88,10 @@ int Get_battery_volt(void)
 //ch:通道编号
 //times:获取次数
 //返回值:通道ch的times次转换结果平均值
-u16 Get_Adc_Average(u8 ch,u8 times)
+uint16_t Get_Adc_Average(uint8_t ch,uint8_t times)
 {
-	u32 temp_val=0;
-	u8 t;
+	uint32_t temp_val=0;
+	uint8_t t;
 	for(t=0;t<times;t++)
 	{
 		temp_val+=Get_Adc(ch);

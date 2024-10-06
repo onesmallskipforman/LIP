@@ -27,10 +27,10 @@ void KEY_Init(void)
 入口参数：双击等待时间
 返回  值：按键状态 0：无动作 1：单击 2：双击 
 **************************************************************************/
-u8 click_N_Double (u8 time)
+uint8_t click_N_Double (uint8_t time)
 {
-		static	u8 flag_key,count_key,double_key;	
-		static	u16 count_single,Forever_count;
+		static	uint8_t flag_key,count_key,double_key;	
+		static	uint16_t count_single,Forever_count;
 	  if(KEY2==0)  Forever_count++;   //长按标志位未置1
      else        Forever_count=0;
 		if(0==KEY2&&0==flag_key)		flag_key=1;	
@@ -72,9 +72,9 @@ u8 click_N_Double (u8 time)
 //入口参数：无
 //返回  值：按键状态 0：无动作 1：单击 
 //**************************************************************************/
-u8 click(void)
+uint8_t click(void)
 {
-			static u8 flag_key=1;//按键按松开标志
+			static uint8_t flag_key=1;//按键按松开标志
 			if(flag_key&&(KEY5==0||KEY11==0||KEY12==0))
 			{
 			flag_key=0;
@@ -91,9 +91,9 @@ u8 click(void)
 入口参数：无
 返回  值：按键状态 0：无动作 1：长按2s
 **************************************************************************/
-u8 Long_Press()
+uint8_t Long_Press()
 {
-			static u16 Long_Press_count,Long_Press=0;
+			static uint16_t Long_Press_count,Long_Press=0;
 	    if(Long_Press==0&&KEY7==0)  Long_Press_count++;   //长按标志位未置1
       else                       Long_Press_count=0; 
 		  if(Long_Press_count>20)		
@@ -109,9 +109,9 @@ u8 Long_Press()
 			return 0;
 }
 
-u8 Long_Press_KEY2(void)
+uint8_t Long_Press_KEY2(void)
 {
-			static u16 Long_Press_count,Long_Press=0;
+			static uint16_t Long_Press_count,Long_Press=0;
 	    if(Long_Press==0&&KEY2==0)  Long_Press_count++;   //长按标志位未置1
       else                       Long_Press_count=0; 
 		  if(Long_Press_count>200)		

@@ -1,8 +1,8 @@
 #include "24l01.h"
 #include "delay.h"
 #include "spi.h"
-const u8 TX_ADDRESS[TX_ADR_WIDTH]={0x34,0x43,0x10,0x10,0x01}; //发送地址
-const u8 RX_ADDRESS[RX_ADR_WIDTH]={0x34,0x43,0x10,0x10,0x01}; //发送地址
+const uint8_t TX_ADDRESS[TX_ADR_WIDTH]={0x34,0x43,0x10,0x10,0x01}; //发送地址
+const uint8_t RX_ADDRESS[RX_ADR_WIDTH]={0x34,0x43,0x10,0x10,0x01}; //发送地址
 							    
 //初始化24L01的IO口
 void NRF24L01_Init(void)
@@ -21,10 +21,10 @@ void NRF24L01_Init(void)
 }
 //检测24L01是否存在
 //返回值:0，成功;1，失败	
-u8 NRF24L01_Check(void)
+uint8_t NRF24L01_Check(void)
 {
-	u8 buf[5]={0XA5,0XA5,0XA5,0XA5,0XA5};
-	u8 i;
+	uint8_t buf[5]={0XA5,0XA5,0XA5,0XA5,0XA5};
+	uint8_t i;
 	SPIx_SetSpeed(SPI_SPEED_8); //spi速度为9Mhz（24L01的最大SPI时钟为10Mhz）   	 
 	NRF24L01_Write_Buf(WRITE_REG2+TX_ADDR,buf,5);//写入5个字节的地址.	
 	NRF24L01_Read_Buf(TX_ADDR,buf,5); //读出写入的地址  
@@ -35,9 +35,9 @@ u8 NRF24L01_Check(void)
 //SPI写寄存器
 //reg:指定寄存器地址
 //value:写入的值
-u8 NRF24L01_Write_Reg(u8 reg,u8 value)
+uint8_t NRF24L01_Write_Reg(uint8_t reg,uint8_t value)
 {
-	u8 status;	
+	uint8_t status;	
    	NRF24L01_CSN=0;                 //使能SPI传输
   	status =SPIx_ReadWriteByte(reg);//发送寄存器号 
   	SPIx_ReadWriteByte(value);      //写入寄存器的值
@@ -46,9 +46,9 @@ u8 NRF24L01_Write_Reg(u8 reg,u8 value)
 }
 //读取SPI寄存器值
 //reg:要读的寄存器
-u8 NRF24L01_Read_Reg(u8 reg)
+uint8_t NRF24L01_Read_Reg(uint8_t reg)
 {
-	u8 reg_val;	    
+	uint8_t reg_val;	    
  	NRF24L01_CSN = 0;          //使能SPI传输		
   	SPIx_ReadWriteByte(reg);   //发送寄存器号
   	reg_val=SPIx_ReadWriteByte(0XFF);//读取寄存器内容
@@ -60,12 +60,12 @@ u8 NRF24L01_Read_Reg(u8 reg)
 //*pBuf:数据指针
 //len:数据长度
 //返回值,此次读到的状态寄存器值 
-u8 NRF24L01_Read_Buf(u8 reg,u8 *pBuf,u8 len)
+uint8_t NRF24L01_Read_Buf(uint8_t reg,uint8_t *pBuf,uint8_t len)
 {
-	u8 status,u8_ctr;	       
+	uint8_t status,uint8_t_ctr;	       
   	NRF24L01_CSN = 0;           //使能SPI传输
   	status=SPIx_ReadWriteByte(reg);//发送寄存器值(位置),并读取状态值   	   
- 	for(u8_ctr=0;u8_ctr<len;u8_ctr++)pBuf[u8_ctr]=SPIx_ReadWriteByte(0XFF);//读出数据
+ 	for(uint8_t_ctr=0;uint8_t_ctr<len;uint8_t_ctr++)pBuf[uint8_t_ctr]=SPIx_ReadWriteByte(0XFF);//读出数据
   	NRF24L01_CSN=1;       //关闭SPI传输
   	return status;        //返回读到的状态值
 }
@@ -74,21 +74,21 @@ u8 NRF24L01_Read_Buf(u8 reg,u8 *pBuf,u8 len)
 //*pBuf:数据指针
 //len:数据长度
 //返回值,此次读到的状态寄存器值
-u8 NRF24L01_Write_Buf(u8 reg, u8 *pBuf, u8 len)
+uint8_t NRF24L01_Write_Buf(uint8_t reg, uint8_t *pBuf, uint8_t len)
 {
-	u8 status,u8_ctr;	    
+	uint8_t status,uint8_t_ctr;	    
  	NRF24L01_CSN = 0;          //使能SPI传输
   	status = SPIx_ReadWriteByte(reg);//发送寄存器值(位置),并读取状态值
-  	for(u8_ctr=0; u8_ctr<len; u8_ctr++)SPIx_ReadWriteByte(*pBuf++); //写入数据	 
+  	for(uint8_t_ctr=0; uint8_t_ctr<len; uint8_t_ctr++)SPIx_ReadWriteByte(*pBuf++); //写入数据	 
   	NRF24L01_CSN = 1;       //关闭SPI传输
   	return status;          //返回读到的状态值
 }				   
 //启动NRF24L01发送一次数据
 //txbuf:待发送数据首地址
 //返回值:发送完成状况
-u8 NRF24L01_TxPacket(u8 *txbuf)
+uint8_t NRF24L01_TxPacket(uint8_t *txbuf)
 {
-	u8 sta;
+	uint8_t sta;
  	SPIx_SetSpeed(SPI_SPEED_8);//spi速度为9Mhz（24L01的最大SPI时钟为10Mhz）   
 	NRF24L01_CE=0;
   	NRF24L01_Write_Buf(WR_TX_PLOAD,txbuf,TX_PLOAD_WIDTH);//写数据到TX BUF  32个字节
@@ -110,9 +110,9 @@ u8 NRF24L01_TxPacket(u8 *txbuf)
 //启动NRF24L01发送一次数据
 //txbuf:待发送数据首地址
 //返回值:0，接收完成；其他，错误代码
-u8 NRF24L01_RxPacket(u8 *rxbuf)
+uint8_t NRF24L01_RxPacket(uint8_t *rxbuf)
 {
-	u8 sta;		    							   
+	uint8_t sta;		    							   
 	SPIx_SetSpeed(SPI_SPEED_8); //spi速度为9Mhz（24L01的最大SPI时钟为10Mhz）   
 	sta=NRF24L01_Read_Reg(STATUS);  //读取状态寄存器的值    	 
 	NRF24L01_Write_Reg(WRITE_REG2+STATUS,sta); //清除TX_DS或MAX_RT中断标志
@@ -130,7 +130,7 @@ u8 NRF24L01_RxPacket(u8 *rxbuf)
 void RX_Mode(void)
 {
 	NRF24L01_CE=0;	  
-  	NRF24L01_Write_Buf(WRITE_REG2+RX_ADDR_P0,(u8*)RX_ADDRESS,RX_ADR_WIDTH);//写RX节点地址
+  	NRF24L01_Write_Buf(WRITE_REG2+RX_ADDR_P0,(uint8_t*)RX_ADDRESS,RX_ADR_WIDTH);//写RX节点地址
 	  
   	NRF24L01_Write_Reg(WRITE_REG2+EN_AA,0x01);    //使能通道0的自动应答    
   	NRF24L01_Write_Reg(WRITE_REG2+EN_RXADDR,0x01);//使能通道0的接收地址  	 
@@ -148,8 +148,8 @@ void RX_Mode(void)
 void TX_Mode(void)
 {														 
 	NRF24L01_CE=0;	    
-  	NRF24L01_Write_Buf(WRITE_REG2+TX_ADDR,(u8*)TX_ADDRESS,TX_ADR_WIDTH);//写TX节点地址 
-  	NRF24L01_Write_Buf(WRITE_REG2+RX_ADDR_P0,(u8*)RX_ADDRESS,RX_ADR_WIDTH); //设置TX节点地址,主要为了使能ACK	  
+  	NRF24L01_Write_Buf(WRITE_REG2+TX_ADDR,(uint8_t*)TX_ADDRESS,TX_ADR_WIDTH);//写TX节点地址 
+  	NRF24L01_Write_Buf(WRITE_REG2+RX_ADDR_P0,(uint8_t*)RX_ADDRESS,RX_ADR_WIDTH); //设置TX节点地址,主要为了使能ACK	  
 
   	NRF24L01_Write_Reg(WRITE_REG2+EN_AA,0x01);     //使能通道0的自动应答    
   	NRF24L01_Write_Reg(WRITE_REG2+EN_RXADDR,0x01); //使能通道0的接收地址  

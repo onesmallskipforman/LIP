@@ -84,29 +84,29 @@
 #define JTAG_SWD_DISABLE   0X02
 #define SWD_ENABLE         0X01
 #define JTAG_SWD_ENABLE    0X00
-extern u8 Flag_Stop,delay_50,delay_flag;         //停止标志位 50ms精准演示标志位
+extern uint8_t Flag_Stop,delay_50,delay_flag;         //停止标志位 50ms精准演示标志位
 extern int Encoder,Position_Zero;            //编码器的脉冲计数
 extern int Moto;                                   //电机PWM变量 应是Motor的 向Moto致敬
 extern int Voltage;                                //电池电压采样相关的变量
 extern float Angle_Balance;                        //角位移传感器数据
 extern float Balance_KP,Balance_KD,Position_KP,Position_KD;  //PID系数
 extern float Menu,Amplitude1,Amplitude2,Amplitude3,Amplitude4; //PID调试相关参数
-extern u8 system_start;
+extern uint8_t system_start;
 
 extern float Position_KP_1,Position_KD_1;
 /////////////////////////////////////////////////////////////////
-void Stm32_Clock_Init(u8 PLL);  //时钟初始化
+void Stm32_Clock_Init(uint8_t PLL);  //时钟初始化
 void Sys_Soft_Reset(void);      //系统软复位
 void Sys_Standby(void);         //待机模式
-void MY_NVIC_SetVectorTable(u32 NVIC_VectTab, u32 Offset);//设置偏移地址
-void MY_NVIC_PriorityGroupConfig(u8 NVIC_Group);//设置NVIC分组
-void MY_NVIC_Init(u8 NVIC_PreemptionPriority,u8 NVIC_SubPriority,u8 NVIC_Channel,u8 NVIC_Group);//设置中断
-void Ex_NVIC_Config(u8 GPIOx,u8 BITx,u8 TRIM);//外部中断配置函数(只对GPIOA~G)
-void JTAG_Set(u8 mode);
+void MY_NVIC_SetVectorTable(uint32_t NVIC_VectTab, uint32_t Offset);//设置偏移地址
+void MY_NVIC_PriorityGroupConfig(uint8_t NVIC_Group);//设置NVIC分组
+void MY_NVIC_Init(uint8_t NVIC_PreemptionPriority,uint8_t NVIC_SubPriority,uint8_t NVIC_Channel,uint8_t NVIC_Group);//设置中断
+void Ex_NVIC_Config(uint8_t GPIOx,uint8_t BITx,uint8_t TRIM);//外部中断配置函数(只对GPIOA~G)
+void JTAG_Set(uint8_t mode);
 //////////////////////////////////////////////////////////////////////////////
 //以下为汇编函数
 void WFI_SET(void);     //执行WFI指令
 void INTX_DISABLE(void);//关闭所有中断
 void INTX_ENABLE(void); //开启所有中断
-void MSR_MSP(u32 addr); //设置堆栈地址
+void MSR_MSP(uint32_t addr); //设置堆栈地址
 #endif

@@ -8,5 +8,5 @@
 //LED 端口定义
 #define LED PAout(4) // PA4
 void LED_Init(void);  //初始化
-void Led_Flash(u16 time);
+void Led_Flash(uint16_t time);
 #endif

@@ -63,7 +63,7 @@ void Encoder_Init_TIM4(void)
 入口参数：定时器
 返回  值：速度值
 **************************************************************************/
-int Read_Encoder(u8 TIMX)
+int Read_Encoder(uint8_t TIMX)
 {
     int Encoder_TIM;    
    switch(TIMX)

@@ -9,7 +9,7 @@ void MiniBalance_Motor_Init(void)
 	GPIOB->CRH&=0X0000FFFF;   //PORTB12 13 14 15推挽输出
 	GPIOB->CRH|=0X22220000;   //PORTB12 13 14 15推挽输出
 }
-void MiniBalance_PWM_Init(u16 arr,u16 psc)
+void MiniBalance_PWM_Init(uint16_t arr,uint16_t psc)
 {		 					 
   MiniBalance_Motor_Init(); //初始化电机控制所需IO
 	RCC->APB1ENR|=1<<1;       //TIM3时钟使能    

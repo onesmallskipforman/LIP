@@ -9,7 +9,7 @@
 入口参数：arr：自动重装值  psc：时钟预分频数 
 返回  值：无
 **************************************************************************/
-void Timer1_Init(u16 arr,u16 psc)  
+void Timer1_Init(uint16_t arr,uint16_t psc)  
 {  
 	RCC->APB2ENR|=1<<11;//TIM1时钟使能    
  	TIM1->ARR=arr;      //设定计数器自动重装值   
