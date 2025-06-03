@@ -1,1 +1,1 @@
-/home/skipper/Projects/LIP/stm32_testing/STM32CubeF1/Drivers/CMSIS/Core/Include/cmsis_version.h
+/home/skipper/Projects/LIP/src/STM32CubeF1/Drivers/CMSIS/Core/Include/cmsis_version.h

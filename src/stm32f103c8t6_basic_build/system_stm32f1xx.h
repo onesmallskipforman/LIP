@@ -1,1 +1,1 @@
-/home/skipper/Projects/LIP/stm32_testing/STM32CubeF1/Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
+/home/skipper/Projects/LIP/src/STM32CubeF1/Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
