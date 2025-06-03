@@ -1,1 +1,1 @@
-/home/skipper/Projects/LIP/src/STM32CubeF1/Drivers/CMSIS/Core/Include/cmsis_compiler.h
+../STM32CubeF1/Drivers/CMSIS/Core/Include/cmsis_compiler.h

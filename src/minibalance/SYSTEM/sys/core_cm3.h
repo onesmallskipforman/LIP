@@ -1,1 +1,1 @@
-/home/skipper/Projects/LIP/src/STM32CubeF1/Drivers/CMSIS/Core/Include/core_cm3.h
+../../../STM32CubeF1/Drivers/CMSIS/Core/Include/core_cm3.h

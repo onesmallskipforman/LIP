@@ -1,1 +1,1 @@
-/home/skipper/Projects/LIP/src/STM32CubeF1/Drivers/CMSIS/Core/Include/cmsis_gcc.h
+../STM32CubeF1/Drivers/CMSIS/Core/Include/cmsis_gcc.h
