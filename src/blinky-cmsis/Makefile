@@ -27,5 +27,8 @@ run: load
 	sudo chown skipper /dev/ttyUSB0
 	STM32_Programmer_CLI -c port=/dev/ttyUSB0 --start
 
+compile_commands.json: clean
+	bear -- $(MAKE) $(OBJS)
+
 clean:
-	rm -rf *.o *.elf *.bin *.hex
+	rm -rf ./compile_commands.json OBJ/* *.elf *.bin *.hex
