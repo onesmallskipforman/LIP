@@ -1,12 +1,12 @@
 [submodule "stm32_testing/bare-metal-programming-guide"]
-	path = stm32_testing/bare-metal-programming-guide
+	path = src/bare-metal-programming-guide
 	url = https://github.com/cpq/bare-metal-programming-guide.git
 [submodule "stm32_testing/pid-invertedpendulum"]
-	path = stm32_testing/pid-invertedpendulum
+	path = src/pid-invertedpendulum
 	url = https://github.com/playfultechnology/pid-invertedpendulum.git
 [submodule "stm32_testing/STM32CubeF1"]
-	path = stm32_testing/STM32CubeF1
+	path = src/STM32CubeF1
 	url = https://github.com/STMicroelectronics/STM32CubeF1.git
 [submodule "stm32_testing/stm32f1xx_bare_template"]
-	path = stm32_testing/stm32f1xx_bare_template
+	path = src/stm32f1xx_bare_template
 	url = https://github.com/stuianna/stm32f1xx_bare_template.git
