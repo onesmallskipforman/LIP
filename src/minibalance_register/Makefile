@@ -35,12 +35,13 @@ minibalance.hex: minibalance.elf
 	arm-none-eabi-objcopy -O ihex $< $@
 
 load: minibalance.hex
-	sudo chown skipper /dev/ttyUSB0
-	STM32_Programmer_CLI -c port=/dev/ttyUSB0 -d $< -v # --start
+	# sudo chown $(shell whoami) /dev/ttyUSB0
+	sudo stm32flash -w $< -v /dev/ttyUSB0
+	# STM32_Programmer_CLI -c port=/dev/ttyUSB0 -d $< -v
 
 run: load
-	sudo chown skipper /dev/ttyUSB0
-	STM32_Programmer_CLI -c port=/dev/ttyUSB0 --start
+	sudo stm32flash -g 0x0 /dev/ttyUSB0
+	# STM32_Programmer_CLI -c port=/dev/ttyUSB0 --start
 
 clean:
 	rm -rf ./compile_commands.json OBJ/* *.elf *.bin *.hex

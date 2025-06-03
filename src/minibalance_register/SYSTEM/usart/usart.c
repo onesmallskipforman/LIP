@@ -1,65 +1,65 @@
-#include "usart.h"	  
+#include "usart.h"
  /**************************************************************************
-作者：平衡小车之家 
+作者：平衡小车之家
 淘宝店铺：http://shop114407458.taobao.com/
 **************************************************************************/
-//加入以下代码,支持printf函数,而不需要选择use MicroLIB	  
+//加入以下代码,支持printf函数,而不需要选择use MicroLIB
 #if 1
-#pragma import(__use_no_semihosting)             
-//标准库需要的支持函数                 
-struct __FILE 
-{ 
-	int handle; 
-	/* Whatever you require here. If the only file you are using is */ 
-	/* standard output using printf() for debugging, no file handling */ 
-	/* is required. */ 
-}; 
-/* FILE is typedef’ d in stdio.h. */ 
-FILE __stdout;       
-//定义_sys_exit()以避免使用半主机模式    
-_sys_exit(int x) 
-{ 
-	x = x; 
-} 
-//重定义fputc函数 
-int fputc(int ch, FILE *f)
-{      
-	
-	while((USART1->SR&0X40)==0);//Flag_Show!=0  使用串口1   
-	USART1->DR = (uint8_t) ch;      
-
-	return ch;
+#pragma import(__use_no_semihosting)
+//标准库需要的支持函数
+struct __FILE
+{
+    int handle;
+    /* Whatever you require here. If the only file you are using is */
+    /* standard output using printf() for debugging, no file handling */
+    /* is required. */
+};
+/* FILE is typedef’ d in stdio.h. */
+FILE __stdout;
+//定义_sys_exit()以避免使用半主机模式
+void _sys_exit(int x)
+{
+    x = x;
 }
-#endif 
+//重定义fputc函数
+int fputc(int ch, FILE *f)
+{
+
+    while((USART1->SR&0X40)==0);//Flag_Show!=0  使用串口1
+    USART1->DR = (uint8_t) ch;
+
+    return ch;
+}
+#endif
 //end
 //////////////////////////////////////////////////////////////////
 /**************************实现函数**********************************************
-*功    能:		usart1发送一个字节
+*功    能:      usart1发送一个字节
 *********************************************************************************/
 void usart1_send(uint8_t data)
 {
-	USART1->DR = data;
-	while((USART1->SR&0x40)==0);	
+    USART1->DR = data;
+    while((USART1->SR&0x40)==0);
 }
 void uart_init(uint32_t pclk2,uint32_t bound)
-{  	 
-	float temp;
-	uint16_t mantissa;
-	uint16_t fraction;	   
-	temp=(float)(pclk2*1000000)/(bound*16);//得到USARTDIV
-	mantissa=temp;				 //得到整数部分
-	fraction=(temp-mantissa)*16; //得到小数部分	 
+{
+    float temp;
+    uint16_t mantissa;
+    uint16_t fraction;
+    temp=(float)(pclk2*1000000)/(bound*16);//得到USARTDIV
+    mantissa=temp;               //得到整数部分
+    fraction=(temp-mantissa)*16; //得到小数部分
     mantissa<<=4;
-	mantissa+=fraction; 
-	RCC->APB2ENR|=1<<2;   //使能PORTA口时钟  
-	RCC->APB2ENR|=1<<14;  //使能串口时钟 
-	GPIOA->CRH&=0XFFFFF00F;//IO状态设置
-	GPIOA->CRH|=0X000008B0;//IO状态设置
-		  
-	RCC->APB2RSTR|=1<<14;   //复位串口1
-	RCC->APB2RSTR&=~(1<<14);//停止复位	   	   
-	//波特率设置
- 	USART1->BRR=mantissa; // 波特率设置	 
-	USART1->CR1|=0X200C;  //1位停止,无校验位.
+    mantissa+=fraction;
+    RCC->APB2ENR|=1<<2;   //使能PORTA口时钟
+    RCC->APB2ENR|=1<<14;  //使能串口时钟
+    GPIOA->CRH&=0XFFFFF00F;//IO状态设置
+    GPIOA->CRH|=0X000008B0;//IO状态设置
+
+    RCC->APB2RSTR|=1<<14;   //复位串口1
+    RCC->APB2RSTR&=~(1<<14);//停止复位
+    //波特率设置
+    USART1->BRR=mantissa; // 波特率设置
+    USART1->CR1|=0X200C;  //1位停止,无校验位.
 
 }
